@@ -3,6 +3,7 @@ import { X, Send, Wallet, CheckCircle, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "@/context/WalletContext";
 import { BrowserProvider, parseEther } from "ethers";
+import { toast } from "@/components/ui/sonner";
 
 interface TipModalProps {
   artistName: string;
@@ -37,12 +38,14 @@ export function TipModal({ artistName, artistWallet, isOpen, onClose }: TipModal
   const handleTip = async () => {
     if (!address) {
       setError("Please connect your wallet first.");
+      toast.error("Please connect your wallet first.");
       return;
     }
 
     const ethereum = (window as any).ethereum;
     if (!ethereum) {
       setError("MetaMask not found.");
+      toast.error("MetaMask not found.");
       return;
     }
 
@@ -61,14 +64,20 @@ export function TipModal({ artistName, artistWallet, isOpen, onClose }: TipModal
       });
 
       setTxHash(tx.hash);
+      toast.loading(`Confirming ${selected} ETH transaction on-chain...`);
+      
       await tx.wait();
       setSending(false);
+      toast.success(`Tip of ${selected} ETH sent to ${artistName}! 🎉`);
     } catch (err: any) {
       setSending(false);
       if (err?.code === "ACTION_REJECTED" || err?.code === 4001) {
         setError("Transaction was rejected.");
+        toast.error("Transaction was rejected.");
       } else {
-        setError(err?.message?.slice(0, 80) || "Transaction failed.");
+        const errMsg = err?.message?.slice(0, 80) || "Transaction failed.";
+        setError(errMsg);
+        toast.error(errMsg);
       }
     }
   };

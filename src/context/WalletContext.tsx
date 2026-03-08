@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 import { BrowserProvider } from "ethers";
+import { toast } from "@/components/ui/sonner";
 
 interface WalletState {
   address: string | null;
@@ -47,6 +48,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     const ethereum = (window as any).ethereum;
     if (!ethereum) {
       window.open("https://metamask.io/download/", "_blank");
+      toast.error("MetaMask not installed. Please download it to continue.");
       return;
     }
     setState((s) => ({ ...s, isConnecting: true }));
@@ -55,13 +57,20 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       const chainId = parseInt(await ethereum.request({ method: "eth_chainId" }), 16);
       setState((s) => ({ ...s, address: accounts[0], chainId, isConnecting: false }));
       fetchBalance(accounts[0]);
-    } catch {
+      toast.success("Wallet connected successfully!");
+    } catch (err: any) {
       setState((s) => ({ ...s, isConnecting: false }));
+      if (err?.code === "ACTION_REJECTED" || err?.code === 4001) {
+        toast.error("Wallet connection was rejected.");
+      } else {
+        toast.error("Failed to connect wallet.");
+      }
     }
   }, [fetchBalance]);
 
   const disconnectWallet = useCallback(() => {
     setState({ address: null, isConnecting: false, chainId: null, balance: null });
+    toast.success("Wallet disconnected.");
   }, []);
 
   // Listen for account/chain changes
