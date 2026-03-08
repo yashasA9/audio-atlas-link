@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Play, Heart, Users, Coins, Wallet } from "lucide-react";
+import { Play, Heart, Users, Coins, Wallet, MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
 import { mockArtists, mockTracks } from "@/data/mockData";
 import { usePlayer } from "@/context/PlayerContext";
 import { useWallet } from "@/context/WalletContext";
 import { TipModal } from "@/components/TipModal";
+import { TrackReviews } from "@/components/TrackReviews";
 
 export default function ArtistPage() {
   const { id } = useParams();
@@ -15,6 +16,7 @@ export default function ArtistPage() {
   const { address, shortAddress } = useWallet();
   const [tipOpen, setTipOpen] = useState(false);
   const [following, setFollowing] = useState(false);
+  const [expandedTrack, setExpandedTrack] = useState<string | null>(null);
 
   const handlePlayAll = () => {
     if (artistTracks.length > 0) {
@@ -80,24 +82,41 @@ export default function ArtistPage() {
         <h2 className="font-display text-xl font-bold text-foreground mb-4">Tracks</h2>
         <div className="space-y-2">
           {artistTracks.map((track, i) => (
-            <motion.div
-              key={track.id}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.05 }}
-              onClick={() => { setQueue(artistTracks); playTrack(track); }}
-              className="flex items-center gap-4 p-3 rounded-lg surface-hover cursor-pointer group"
-            >
-              <span className="w-6 text-center text-sm text-muted-foreground group-hover:hidden">{i + 1}</span>
-              <Play className="w-6 h-4 text-foreground hidden group-hover:block" />
-              <img src={track.coverArt} alt={track.title} className="h-10 w-10 rounded object-cover" />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">{track.title}</p>
-                <p className="text-xs text-muted-foreground">{track.playCount.toLocaleString()} plays</p>
-              </div>
-              <span className="text-xs text-muted-foreground">{Math.floor(track.duration / 60)}:{(track.duration % 60).toString().padStart(2, "0")}</span>
-              <Heart className={`h-4 w-4 cursor-pointer ${track.liked ? "text-primary fill-primary" : "text-muted-foreground opacity-0 group-hover:opacity-100"}`} />
-            </motion.div>
+            <div key={track.id}>
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className="flex items-center gap-4 p-3 rounded-lg surface-hover cursor-pointer group"
+              >
+                <span className="w-6 text-center text-sm text-muted-foreground group-hover:hidden" onClick={() => { setQueue(artistTracks); playTrack(track); }}>{i + 1}</span>
+                <Play className="w-6 h-4 text-foreground hidden group-hover:block" onClick={() => { setQueue(artistTracks); playTrack(track); }} />
+                <img src={track.coverArt} alt={track.title} className="h-10 w-10 rounded object-cover" onClick={() => { setQueue(artistTracks); playTrack(track); }} />
+                <div className="flex-1 min-w-0" onClick={() => { setQueue(artistTracks); playTrack(track); }}>
+                  <p className="text-sm font-medium text-foreground truncate">{track.title}</p>
+                  <p className="text-xs text-muted-foreground">{track.playCount.toLocaleString()} plays</p>
+                </div>
+                <button
+                  onClick={(e) => { e.stopPropagation(); setExpandedTrack(expandedTrack === track.id ? null : track.id); }}
+                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <MessageSquare className="h-3.5 w-3.5" />
+                  {expandedTrack === track.id ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                </button>
+                <span className="text-xs text-muted-foreground">{Math.floor(track.duration / 60)}:{(track.duration % 60).toString().padStart(2, "0")}</span>
+                <Heart className={`h-4 w-4 cursor-pointer ${track.liked ? "text-primary fill-primary" : "text-muted-foreground opacity-0 group-hover:opacity-100"}`} />
+              </motion.div>
+              {expandedTrack === track.id && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="pl-12 pr-4 pb-4 pt-2"
+                >
+                  <TrackReviews trackId={track.id} trackTitle={track.title} />
+                </motion.div>
+              )}
+            </div>
           ))}
         </div>
       </div>
