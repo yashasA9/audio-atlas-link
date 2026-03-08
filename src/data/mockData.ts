@@ -1,5 +1,12 @@
 import { Track, Artist, Playlist } from "@/types/music";
 
+// Generate deterministic UUIDs for mock data so they work with the database
+function mockUUID(prefix: string, index: number): string {
+  const hex = index.toString(16).padStart(4, "0");
+  return prefix === "track"
+    ? `00000000-0000-4000-a000-00000000${hex}`
+    : `00000000-0000-4000-b000-00000000${hex}`;
+}
 const covers = [
   "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&h=300&fit=crop",
   "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop",
