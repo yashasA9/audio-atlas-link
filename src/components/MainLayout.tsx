@@ -15,11 +15,12 @@ export function MainLayout() {
       <AppSidebar />
 
       {/* Mobile header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-card/95 backdrop-blur-xl border-b border-border flex items-center px-4">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-card/95 backdrop-blur-xl border-b border-border flex items-center justify-between px-4">
         <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-foreground">
           <Menu className="h-6 w-6" />
         </button>
-        <h1 className="ml-3 font-display text-lg font-bold text-gradient">MusicDapp</h1>
+        <h1 className="font-display text-lg font-bold text-gradient">MusicDapp</h1>
+        <MobileWalletButton />
       </div>
 
       <main className={`flex-1 overflow-y-auto scrollbar-hide ${currentTrack ? "pb-24" : "pb-4"} md:pt-0 pt-14`}>
