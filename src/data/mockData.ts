@@ -56,7 +56,7 @@ export const mockTracks: Track[] = trackNames.map((title, i) => ({
 }));
 
 export const mockArtists: Artist[] = artistNames.map((name, i) => ({
-  id: `artist-${i}`,
+  id: mockUUID("artist", i),
   name,
   avatar: avatars[i % avatars.length],
   banner: banners[i % banners.length],
