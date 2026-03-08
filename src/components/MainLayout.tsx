@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { AppSidebar } from "@/components/AppSidebar";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { usePlayer } from "@/context/PlayerContext";
+import { MobileWalletButton } from "@/components/MobileWalletButton";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 
