@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Upload, Music, Image, Check } from "lucide-react";
+import { Upload, Music, Image, Check, Wallet } from "lucide-react";
+import { useWallet } from "@/context/WalletContext";
 
 export default function UploadPage() {
   const [step, setStep] = useState(0);
+  const { address, shortAddress } = useWallet();
 
   return (
     <div className="p-6 md:p-8 max-w-2xl mx-auto space-y-8">
