@@ -24,6 +24,7 @@ export function TipModal({ artistName, artistWallet, isOpen, onClose }: TipModal
   const [txHash, setTxHash] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { address } = useWallet();
+  const { addTransaction, updateTransaction } = useTransactions();
 
   const resetState = () => {
     setTxHash(null);
