@@ -39,6 +39,7 @@ const App = () => (
               <Route path="/playlists" element={<PlaylistsPage />} />
               <Route path="/playlist/:id" element={<PlaylistDetailPage />} />
               <Route path="/upload" element={<UploadPage />} />
+              <Route path="/transactions" element={<TransactionHistoryPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
