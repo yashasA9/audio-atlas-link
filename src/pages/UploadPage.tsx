@@ -81,7 +81,21 @@ export default function UploadPage() {
           </div>
           <h2 className="font-display text-xl font-bold text-foreground">Ready to Publish</h2>
           <p className="text-sm text-muted-foreground mt-2 mb-6">Your track will be stored on IPFS and registered on the blockchain</p>
-          <button onClick={() => setStep(0)} className="px-8 py-3 rounded-full gradient-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity">
+          {address && (
+            <div className="glass-card px-4 py-3 flex items-center justify-center gap-2 mb-6 w-fit mx-auto">
+              <Wallet className="h-4 w-4 text-primary" />
+              <span className="text-xs text-muted-foreground">Publishing Identity:</span>
+              <span className="text-sm font-mono font-medium text-foreground">{shortAddress}</span>
+            </div>
+          )}
+          {!address && (
+            <div className="glass-card px-4 py-3 mb-6 text-center bg-accent/10 border border-accent/30">
+              <p className="text-sm text-accent font-medium">⚠️ Connect your wallet to publish tracks</p>
+            </div>
+          )}
+          <button onClick={() => setStep(0)} disabled={!address} className={`px-8 py-3 rounded-full font-semibold transition-opacity ${
+            address ? "gradient-primary text-primary-foreground hover:opacity-90" : "bg-muted text-muted-foreground cursor-not-allowed"
+          }`}>
             Publish to Blockchain
           </button>
         </motion.div>
