@@ -12,6 +12,13 @@ export default function UploadPage() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="font-display text-3xl font-bold text-foreground">Upload Music</h1>
         <p className="text-muted-foreground mt-1">Share your music on the decentralized network</p>
+        {address && (
+          <div className="mt-4 glass-card px-4 py-3 flex items-center gap-2 w-fit">
+            <Wallet className="h-4 w-4 text-primary" />
+            <span className="text-xs text-muted-foreground">Publishing as:</span>
+            <span className="text-sm font-mono font-medium text-foreground">{shortAddress}</span>
+          </div>
+        )}
       </motion.div>
 
       {/* Steps */}
