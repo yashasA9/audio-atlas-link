@@ -1,6 +1,6 @@
 import { NavLink as RouterNavLink } from "react-router-dom";
-import { Home, Compass, Library, ListMusic, Upload, Wallet } from "lucide-react";
-import { motion } from "framer-motion";
+import { Home, Compass, Library, ListMusic, Upload, Wallet, LogOut, Loader2 } from "lucide-react";
+import { useWallet } from "@/context/WalletContext";
 
 const navItems = [
   { to: "/", icon: Home, label: "Home" },
@@ -11,6 +11,8 @@ const navItems = [
 ];
 
 export function AppSidebar() {
+  const { address, shortAddress, balance, isConnecting, connectWallet, disconnectWallet } = useWallet();
+
   return (
     <aside className="hidden md:flex flex-col w-60 bg-sidebar border-r border-sidebar-border h-screen sticky top-0">
       <div className="p-6">
@@ -38,11 +40,40 @@ export function AppSidebar() {
         ))}
       </nav>
 
-      <div className="p-4 m-3 glass-card">
-        <div className="flex items-center gap-2 text-sm">
-          <Wallet className="h-4 w-4 text-primary" />
-          <span className="text-muted-foreground">Connect Wallet</span>
-        </div>
+      {/* Wallet Section */}
+      <div className="p-3">
+        {address ? (
+          <div className="glass-card p-3 space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center">
+                <Wallet className="h-4 w-4 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-semibold text-foreground truncate">{shortAddress}</p>
+                {balance && <p className="text-[10px] text-muted-foreground">{balance}</p>}
+              </div>
+            </div>
+            <button
+              onClick={disconnectWallet}
+              className="w-full flex items-center justify-center gap-1.5 text-xs text-muted-foreground hover:text-destructive py-1.5 rounded-md surface-hover transition-colors"
+            >
+              <LogOut className="h-3 w-3" /> Disconnect
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={connectWallet}
+            disabled={isConnecting}
+            className="w-full glass-card p-3 flex items-center justify-center gap-2 text-sm font-medium text-foreground hover:border-primary/30 transition-all disabled:opacity-50"
+          >
+            {isConnecting ? (
+              <Loader2 className="h-4 w-4 animate-spin text-primary" />
+            ) : (
+              <Wallet className="h-4 w-4 text-primary" />
+            )}
+            {isConnecting ? "Connecting..." : "Connect Wallet"}
+          </button>
+        )}
       </div>
     </aside>
   );
