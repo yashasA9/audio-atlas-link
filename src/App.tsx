@@ -17,6 +17,7 @@ import PlaylistsPage from "@/pages/PlaylistsPage";
 import PlaylistDetailPage from "@/pages/PlaylistDetailPage";
 import UploadPage from "@/pages/UploadPage";
 import TransactionHistoryPage from "@/pages/TransactionHistoryPage";
+import ArtistDashboardPage from "@/pages/ArtistDashboardPage";
 import AuthPage from "@/pages/AuthPage";
 import NotFound from "./pages/NotFound";
 
