@@ -1,5 +1,12 @@
 import { Track, Artist, Playlist } from "@/types/music";
 
+// Generate deterministic UUIDs for mock data so they work with the database
+function mockUUID(prefix: string, index: number): string {
+  const hex = index.toString(16).padStart(4, "0");
+  return prefix === "track"
+    ? `00000000-0000-4000-a000-00000000${hex}`
+    : `00000000-0000-4000-b000-00000000${hex}`;
+}
 const covers = [
   "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&h=300&fit=crop",
   "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop",
@@ -37,10 +44,10 @@ const trackNames = [
 const artistNames = ["CryptoBeats", "BlockchainBabe", "DeFi Diva", "NFT Ninja", "Hash Hero", "Web3 Wizard"];
 
 export const mockTracks: Track[] = trackNames.map((title, i) => ({
-  id: `track-${i}`,
+  id: mockUUID("track", i),
   title,
   artist: artistNames[i % artistNames.length],
-  artistId: `artist-${i % artistNames.length}`,
+  artistId: mockUUID("artist", i % artistNames.length),
   genre: genres[i % genres.length],
   coverArt: covers[i % covers.length],
   duration: 180 + Math.floor(Math.random() * 120),
@@ -49,7 +56,7 @@ export const mockTracks: Track[] = trackNames.map((title, i) => ({
 }));
 
 export const mockArtists: Artist[] = artistNames.map((name, i) => ({
-  id: `artist-${i}`,
+  id: mockUUID("artist", i),
   name,
   avatar: avatars[i % avatars.length],
   banner: banners[i % banners.length],
@@ -57,7 +64,7 @@ export const mockArtists: Artist[] = artistNames.map((name, i) => ({
   followers: Math.floor(Math.random() * 10000),
   totalTips: parseFloat((Math.random() * 5).toFixed(2)),
   walletAddress: `0x${Array.from({ length: 8 }, () => Math.floor(Math.random() * 16).toString(16)).join("")}...`,
-  tracks: mockTracks.filter((t) => t.artistId === `artist-${i}`),
+  tracks: mockTracks.filter((t) => t.artistId === mockUUID("artist", i)),
 }));
 
 export const mockPlaylists: Playlist[] = [

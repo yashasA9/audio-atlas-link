@@ -68,14 +68,7 @@ export function TrackReviews({ trackId, trackTitle }: TrackReviewsProps) {
   const [comment, setComment] = useState("");
   const [avgRating, setAvgRating] = useState(0);
 
-  // Check if trackId is a valid UUID (mock data uses "track-0" style IDs)
-  const isValidUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(trackId);
-
   const fetchReviews = useCallback(async () => {
-    if (!isValidUUID) {
-      setLoading(false);
-      return;
-    }
     const { data } = await supabase
       .from("reviews")
       .select("id, user_id, rating, comment, created_at")
@@ -117,10 +110,6 @@ export function TrackReviews({ trackId, trackTitle }: TrackReviewsProps) {
     e.preventDefault();
     if (!user) {
       toast.error("Sign in to leave a review");
-      return;
-    }
-    if (!isValidUUID) {
-      toast.error("Reviews are only available for published tracks");
       return;
     }
     if (rating === 0) {
