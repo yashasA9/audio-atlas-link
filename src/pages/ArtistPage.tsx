@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Play, Heart, Users, Coins } from "lucide-react";
+import { Play, Heart, Users, Coins, Wallet } from "lucide-react";
 import { mockArtists, mockTracks } from "@/data/mockData";
 import { usePlayer } from "@/context/PlayerContext";
+import { useWallet } from "@/context/WalletContext";
 import { TipModal } from "@/components/TipModal";
 
 export default function ArtistPage() {
@@ -11,6 +12,7 @@ export default function ArtistPage() {
   const artist = mockArtists.find((a) => a.id === id) || mockArtists[0];
   const artistTracks = mockTracks.filter((t) => t.artistId === artist.id);
   const { playTrack, setQueue } = usePlayer();
+  const { address, shortAddress } = useWallet();
   const [tipOpen, setTipOpen] = useState(false);
   const [following, setFollowing] = useState(false);
 
@@ -51,17 +53,26 @@ export default function ArtistPage() {
       </div>
 
       {/* Stats */}
-      <div className="px-6 md:px-8 mt-6 flex gap-6">
-        <div className="glass-card px-4 py-3 flex items-center gap-2">
-          <Users className="h-4 w-4 text-primary" />
-          <span className="text-sm font-medium text-foreground">{artist.followers.toLocaleString()}</span>
-          <span className="text-xs text-muted-foreground">Followers</span>
+      <div className="px-6 md:px-8 mt-6 flex flex-col gap-4">
+        <div className="flex gap-6 flex-wrap">
+          <div className="glass-card px-4 py-3 flex items-center gap-2">
+            <Users className="h-4 w-4 text-primary" />
+            <span className="text-sm font-medium text-foreground">{artist.followers.toLocaleString()}</span>
+            <span className="text-xs text-muted-foreground">Followers</span>
+          </div>
+          <div className="glass-card px-4 py-3 flex items-center gap-2">
+            <Coins className="h-4 w-4 text-accent" />
+            <span className="text-sm font-medium text-foreground">{artist.totalTips} ETH</span>
+            <span className="text-xs text-muted-foreground">Tips</span>
+          </div>
         </div>
-        <div className="glass-card px-4 py-3 flex items-center gap-2">
-          <Coins className="h-4 w-4 text-accent" />
-          <span className="text-sm font-medium text-foreground">{artist.totalTips} ETH</span>
-          <span className="text-xs text-muted-foreground">Tips</span>
-        </div>
+        {address && (
+          <div className="glass-card px-4 py-3 flex items-center gap-2 w-fit">
+            <Wallet className="h-4 w-4 text-primary" />
+            <span className="text-xs text-muted-foreground">Publishing Identity:</span>
+            <span className="text-sm font-mono font-medium text-foreground">{shortAddress}</span>
+          </div>
+        )}
       </div>
 
       {/* Tracks */}
