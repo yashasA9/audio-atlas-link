@@ -6,7 +6,7 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center relative overflow-hidden bg-background">
       {/* Glow effects */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/10 blur-[120px]" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-accent/10 blur-[120px]" />
