@@ -3,6 +3,7 @@ import { X, Send, Wallet, CheckCircle, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "@/context/WalletContext";
 import { BrowserProvider, parseEther } from "ethers";
+import { toast } from "@/components/ui/sonner";
 
 interface TipModalProps {
   artistName: string;
