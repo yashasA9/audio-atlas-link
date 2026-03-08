@@ -12,6 +12,7 @@ export default function ArtistPage() {
   const artist = mockArtists.find((a) => a.id === id) || mockArtists[0];
   const artistTracks = mockTracks.filter((t) => t.artistId === artist.id);
   const { playTrack, setQueue } = usePlayer();
+  const { address, shortAddress } = useWallet();
   const [tipOpen, setTipOpen] = useState(false);
   const [following, setFollowing] = useState(false);
 
