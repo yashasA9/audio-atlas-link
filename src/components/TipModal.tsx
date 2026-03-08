@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X, Send, Wallet, CheckCircle, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "@/context/WalletContext";
+import { useTransactions } from "@/context/TransactionContext";
 import { BrowserProvider, parseEther } from "ethers";
 import { toast } from "@/components/ui/sonner";
 
@@ -23,6 +24,7 @@ export function TipModal({ artistName, artistWallet, isOpen, onClose }: TipModal
   const [txHash, setTxHash] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { address } = useWallet();
+  const { addTransaction, updateTransaction } = useTransactions();
 
   const resetState = () => {
     setTxHash(null);
@@ -64,13 +66,24 @@ export function TipModal({ artistName, artistWallet, isOpen, onClose }: TipModal
       });
 
       setTxHash(tx.hash);
+      addTransaction({
+        type: "tip",
+        txHash: tx.hash,
+        amount: selected.toString(),
+        recipient,
+        recipientName: artistName,
+        timestamp: Date.now(),
+        status: "pending",
+      });
       toast.loading(`Confirming ${selected} ETH transaction on-chain...`);
       
       await tx.wait();
+      updateTransaction(tx.hash, { status: "confirmed" });
       setSending(false);
       toast.success(`Tip of ${selected} ETH sent to ${artistName}! 🎉`);
     } catch (err: any) {
       setSending(false);
+      if (txHash) updateTransaction(txHash, { status: "failed" });
       if (err?.code === "ACTION_REJECTED" || err?.code === 4001) {
         setError("Transaction was rejected.");
         toast.error("Transaction was rejected.");

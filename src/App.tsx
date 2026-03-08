@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PlayerProvider } from "@/context/PlayerContext";
 import { WalletProvider } from "@/context/WalletContext";
+import { TransactionProvider } from "@/context/TransactionContext";
 import { MainLayout } from "@/components/MainLayout";
 import LandingPage from "@/pages/LandingPage";
 import HomePage from "@/pages/HomePage";
@@ -14,6 +15,7 @@ import LibraryPage from "@/pages/LibraryPage";
 import PlaylistsPage from "@/pages/PlaylistsPage";
 import PlaylistDetailPage from "@/pages/PlaylistDetailPage";
 import UploadPage from "@/pages/UploadPage";
+import TransactionHistoryPage from "@/pages/TransactionHistoryPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +24,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <WalletProvider>
+      <TransactionProvider>
       <PlayerProvider>
         <Toaster />
         <Sonner />
@@ -36,11 +39,13 @@ const App = () => (
               <Route path="/playlists" element={<PlaylistsPage />} />
               <Route path="/playlist/:id" element={<PlaylistDetailPage />} />
               <Route path="/upload" element={<UploadPage />} />
+              <Route path="/transactions" element={<TransactionHistoryPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </PlayerProvider>
+      </TransactionProvider>
       </WalletProvider>
     </TooltipProvider>
   </QueryClientProvider>
