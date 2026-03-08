@@ -1,6 +1,7 @@
-import { NavLink as RouterNavLink } from "react-router-dom";
-import { Home, Compass, Library, ListMusic, Upload, History, Wallet, LogOut, Loader2 } from "lucide-react";
+import { NavLink as RouterNavLink, useNavigate } from "react-router-dom";
+import { Home, Compass, Library, ListMusic, Upload, History, Wallet, LogOut, Loader2, User, LogIn } from "lucide-react";
 import { useWallet } from "@/context/WalletContext";
+import { useAuth } from "@/context/AuthContext";
 
 const navItems = [
   { to: "/", icon: Home, label: "Home" },
@@ -13,6 +14,8 @@ const navItems = [
 
 export function AppSidebar() {
   const { address, shortAddress, balance, isConnecting, connectWallet, disconnectWallet } = useWallet();
+  const { user, profile, signOut, loading } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <aside className="hidden md:flex flex-col w-60 bg-sidebar border-r border-sidebar-border h-screen sticky top-0">
@@ -41,8 +44,43 @@ export function AppSidebar() {
         ))}
       </nav>
 
-      {/* Wallet Section */}
-      <div className="p-3">
+      {/* User Section */}
+      <div className="p-3 space-y-2">
+        {user ? (
+          <div className="glass-card p-3 space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden">
+                {profile?.avatar_url ? (
+                  <img src={profile.avatar_url} alt="" className="h-full w-full object-cover" />
+                ) : (
+                  <User className="h-4 w-4 text-accent" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-semibold text-foreground truncate">
+                  {profile?.display_name || user.email?.split("@")[0]}
+                </p>
+                <p className="text-[10px] text-muted-foreground truncate">{user.email}</p>
+              </div>
+            </div>
+            <button
+              onClick={() => signOut()}
+              className="w-full flex items-center justify-center gap-1.5 text-xs text-muted-foreground hover:text-destructive py-1.5 rounded-md surface-hover transition-colors"
+            >
+              <LogOut className="h-3 w-3" /> Sign Out
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => navigate("/auth")}
+            className="w-full glass-card p-3 flex items-center justify-center gap-2 text-sm font-medium text-foreground hover:border-primary/30 transition-all"
+          >
+            <LogIn className="h-4 w-4 text-primary" />
+            Sign In
+          </button>
+        )}
+
+        {/* Wallet Section */}
         {address ? (
           <div className="glass-card p-3 space-y-2">
             <div className="flex items-center gap-2">
