@@ -8,6 +8,7 @@ const navItems = [
   { to: "/library", icon: Library, label: "Library" },
   { to: "/playlists", icon: ListMusic, label: "Playlists" },
   { to: "/upload", icon: Upload, label: "Upload" },
+  { to: "/transactions", icon: History, label: "History" },
 ];
 
 export function AppSidebar() {

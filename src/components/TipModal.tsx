@@ -83,6 +83,7 @@ export function TipModal({ artistName, artistWallet, isOpen, onClose }: TipModal
       toast.success(`Tip of ${selected} ETH sent to ${artistName}! 🎉`);
     } catch (err: any) {
       setSending(false);
+      if (txHash) updateTransaction(txHash, { status: "failed" });
       if (err?.code === "ACTION_REJECTED" || err?.code === 4001) {
         setError("Transaction was rejected.");
         toast.error("Transaction was rejected.");
