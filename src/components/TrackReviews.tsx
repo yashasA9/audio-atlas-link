@@ -119,6 +119,10 @@ export function TrackReviews({ trackId, trackTitle }: TrackReviewsProps) {
       toast.error("Sign in to leave a review");
       return;
     }
+    if (!isValidUUID) {
+      toast.error("Reviews are only available for published tracks");
+      return;
+    }
     if (rating === 0) {
       toast.error("Please select a star rating");
       return;
