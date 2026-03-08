@@ -53,17 +53,26 @@ export default function ArtistPage() {
       </div>
 
       {/* Stats */}
-      <div className="px-6 md:px-8 mt-6 flex gap-6">
-        <div className="glass-card px-4 py-3 flex items-center gap-2">
-          <Users className="h-4 w-4 text-primary" />
-          <span className="text-sm font-medium text-foreground">{artist.followers.toLocaleString()}</span>
-          <span className="text-xs text-muted-foreground">Followers</span>
+      <div className="px-6 md:px-8 mt-6 flex flex-col gap-4">
+        <div className="flex gap-6 flex-wrap">
+          <div className="glass-card px-4 py-3 flex items-center gap-2">
+            <Users className="h-4 w-4 text-primary" />
+            <span className="text-sm font-medium text-foreground">{artist.followers.toLocaleString()}</span>
+            <span className="text-xs text-muted-foreground">Followers</span>
+          </div>
+          <div className="glass-card px-4 py-3 flex items-center gap-2">
+            <Coins className="h-4 w-4 text-accent" />
+            <span className="text-sm font-medium text-foreground">{artist.totalTips} ETH</span>
+            <span className="text-xs text-muted-foreground">Tips</span>
+          </div>
         </div>
-        <div className="glass-card px-4 py-3 flex items-center gap-2">
-          <Coins className="h-4 w-4 text-accent" />
-          <span className="text-sm font-medium text-foreground">{artist.totalTips} ETH</span>
-          <span className="text-xs text-muted-foreground">Tips</span>
-        </div>
+        {address && (
+          <div className="glass-card px-4 py-3 flex items-center gap-2 w-fit">
+            <Wallet className="h-4 w-4 text-primary" />
+            <span className="text-xs text-muted-foreground">Publishing Identity:</span>
+            <span className="text-sm font-mono font-medium text-foreground">{shortAddress}</span>
+          </div>
+        )}
       </div>
 
       {/* Tracks */}
