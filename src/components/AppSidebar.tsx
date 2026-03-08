@@ -1,5 +1,5 @@
 import { NavLink as RouterNavLink } from "react-router-dom";
-import { Home, Compass, Library, ListMusic, Upload, Wallet, LogOut, Loader2 } from "lucide-react";
+import { Home, Compass, Library, ListMusic, Upload, History, Wallet, LogOut, Loader2 } from "lucide-react";
 import { useWallet } from "@/context/WalletContext";
 
 const navItems = [
