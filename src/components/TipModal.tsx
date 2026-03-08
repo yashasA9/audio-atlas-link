@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X, Send, Wallet, CheckCircle, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWallet } from "@/context/WalletContext";
+import { useTransactions } from "@/context/TransactionContext";
 import { BrowserProvider, parseEther } from "ethers";
 import { toast } from "@/components/ui/sonner";
 
