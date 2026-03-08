@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 import { BrowserProvider } from "ethers";
+import { toast } from "@/components/ui/sonner";
 
 interface WalletState {
   address: string | null;
