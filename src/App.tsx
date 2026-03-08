@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PlayerProvider } from "@/context/PlayerContext";
 import { WalletProvider } from "@/context/WalletContext";
 import { TransactionProvider } from "@/context/TransactionContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { MainLayout } from "@/components/MainLayout";
 import LandingPage from "@/pages/LandingPage";
 import HomePage from "@/pages/HomePage";
@@ -16,6 +17,7 @@ import PlaylistsPage from "@/pages/PlaylistsPage";
 import PlaylistDetailPage from "@/pages/PlaylistDetailPage";
 import UploadPage from "@/pages/UploadPage";
 import TransactionHistoryPage from "@/pages/TransactionHistoryPage";
+import AuthPage from "@/pages/AuthPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +25,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <AuthProvider>
       <WalletProvider>
       <TransactionProvider>
       <PlayerProvider>
@@ -31,6 +34,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/welcome" element={<LandingPage />} />
+            <Route path="/auth" element={<AuthPage />} />
             <Route element={<MainLayout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/discover" element={<DiscoverPage />} />
@@ -47,6 +51,7 @@ const App = () => (
       </PlayerProvider>
       </TransactionProvider>
       </WalletProvider>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
