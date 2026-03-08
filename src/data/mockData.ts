@@ -64,7 +64,7 @@ export const mockArtists: Artist[] = artistNames.map((name, i) => ({
   followers: Math.floor(Math.random() * 10000),
   totalTips: parseFloat((Math.random() * 5).toFixed(2)),
   walletAddress: `0x${Array.from({ length: 8 }, () => Math.floor(Math.random() * 16).toString(16)).join("")}...`,
-  tracks: mockTracks.filter((t) => t.artistId === `artist-${i}`),
+  tracks: mockTracks.filter((t) => t.artistId === mockUUID("artist", i)),
 }));
 
 export const mockPlaylists: Playlist[] = [
