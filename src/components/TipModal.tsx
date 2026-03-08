@@ -66,9 +66,19 @@ export function TipModal({ artistName, artistWallet, isOpen, onClose }: TipModal
       });
 
       setTxHash(tx.hash);
+      addTransaction({
+        type: "tip",
+        txHash: tx.hash,
+        amount: selected.toString(),
+        recipient,
+        recipientName: artistName,
+        timestamp: Date.now(),
+        status: "pending",
+      });
       toast.loading(`Confirming ${selected} ETH transaction on-chain...`);
       
       await tx.wait();
+      updateTransaction(tx.hash, { status: "confirmed" });
       setSending(false);
       toast.success(`Tip of ${selected} ETH sent to ${artistName}! 🎉`);
     } catch (err: any) {
