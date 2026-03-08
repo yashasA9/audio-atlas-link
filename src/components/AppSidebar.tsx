@@ -1,5 +1,5 @@
 import { NavLink as RouterNavLink, useNavigate } from "react-router-dom";
-import { Home, Compass, Library, ListMusic, Upload, History, Wallet, LogOut, Loader2, User, LogIn } from "lucide-react";
+import { Home, Compass, Library, ListMusic, Upload, History, Wallet, LogOut, Loader2, User, LogIn, LayoutDashboard } from "lucide-react";
 import { useWallet } from "@/context/WalletContext";
 import { useAuth } from "@/context/AuthContext";
 
@@ -9,6 +9,7 @@ const navItems = [
   { to: "/library", icon: Library, label: "Library" },
   { to: "/playlists", icon: ListMusic, label: "Playlists" },
   { to: "/upload", icon: Upload, label: "Upload" },
+  { to: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
   { to: "/transactions", icon: History, label: "History" },
 ];
 
