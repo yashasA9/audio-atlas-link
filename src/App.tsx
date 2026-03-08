@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PlayerProvider } from "@/context/PlayerContext";
 import { MainLayout } from "@/components/MainLayout";
+import LandingPage from "@/pages/LandingPage";
 import HomePage from "@/pages/HomePage";
 import DiscoverPage from "@/pages/DiscoverPage";
 import ArtistPage from "@/pages/ArtistPage";
@@ -24,6 +25,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            <Route path="/welcome" element={<LandingPage />} />
             <Route element={<MainLayout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/discover" element={<DiscoverPage />} />
