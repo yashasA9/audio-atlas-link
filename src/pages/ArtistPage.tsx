@@ -16,6 +16,7 @@ export default function ArtistPage() {
   const { address, shortAddress } = useWallet();
   const [tipOpen, setTipOpen] = useState(false);
   const [following, setFollowing] = useState(false);
+  const [expandedTrack, setExpandedTrack] = useState<string | null>(null);
 
   const handlePlayAll = () => {
     if (artistTracks.length > 0) {
