@@ -24,7 +24,7 @@ export function AppSidebar() {
         <p className="text-xs text-muted-foreground mt-1">Decentralized Music</p>
       </div>
 
-      nav className="flex-1 px-3 space-y-1">
+      <nav className="flex-1 px-3 space-y-1">
         {navItems.map((item) => (
           <RouterNavLink
             key={item.to}
