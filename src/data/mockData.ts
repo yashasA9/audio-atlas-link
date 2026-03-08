@@ -44,10 +44,10 @@ const trackNames = [
 const artistNames = ["CryptoBeats", "BlockchainBabe", "DeFi Diva", "NFT Ninja", "Hash Hero", "Web3 Wizard"];
 
 export const mockTracks: Track[] = trackNames.map((title, i) => ({
-  id: `track-${i}`,
+  id: mockUUID("track", i),
   title,
   artist: artistNames[i % artistNames.length],
-  artistId: `artist-${i % artistNames.length}`,
+  artistId: mockUUID("artist", i % artistNames.length),
   genre: genres[i % genres.length],
   coverArt: covers[i % covers.length],
   duration: 180 + Math.floor(Math.random() * 120),
