@@ -70,6 +70,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
 
   const disconnectWallet = useCallback(() => {
     setState({ address: null, isConnecting: false, chainId: null, balance: null });
+    toast.success("Wallet disconnected.");
   }, []);
 
   // Listen for account/chain changes
