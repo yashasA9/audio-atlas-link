@@ -14,7 +14,322 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      artists: {
+        Row: {
+          avatar: string | null
+          banner: string | null
+          bio: string | null
+          created_at: string
+          followers_count: number
+          id: string
+          name: string
+          total_tips: number
+          updated_at: string
+          user_id: string | null
+          wallet_address: string | null
+        }
+        Insert: {
+          avatar?: string | null
+          banner?: string | null
+          bio?: string | null
+          created_at?: string
+          followers_count?: number
+          id?: string
+          name: string
+          total_tips?: number
+          updated_at?: string
+          user_id?: string | null
+          wallet_address?: string | null
+        }
+        Update: {
+          avatar?: string | null
+          banner?: string | null
+          bio?: string | null
+          created_at?: string
+          followers_count?: number
+          id?: string
+          name?: string
+          total_tips?: number
+          updated_at?: string
+          user_id?: string | null
+          wallet_address?: string | null
+        }
+        Relationships: []
+      }
+      follows: {
+        Row: {
+          artist_id: string
+          created_at: string
+          follower_id: string
+          id: string
+        }
+        Insert: {
+          artist_id: string
+          created_at?: string
+          follower_id: string
+          id?: string
+        }
+        Update: {
+          artist_id?: string
+          created_at?: string
+          follower_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "follows_artist_id_fkey"
+            columns: ["artist_id"]
+            isOneToOne: false
+            referencedRelation: "artists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      likes: {
+        Row: {
+          created_at: string
+          id: string
+          track_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          track_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          track_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "likes_track_id_fkey"
+            columns: ["track_id"]
+            isOneToOne: false
+            referencedRelation: "tracks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      playlist_tracks: {
+        Row: {
+          added_at: string
+          id: string
+          playlist_id: string
+          position: number
+          track_id: string
+        }
+        Insert: {
+          added_at?: string
+          id?: string
+          playlist_id: string
+          position?: number
+          track_id: string
+        }
+        Update: {
+          added_at?: string
+          id?: string
+          playlist_id?: string
+          position?: number
+          track_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "playlist_tracks_playlist_id_fkey"
+            columns: ["playlist_id"]
+            isOneToOne: false
+            referencedRelation: "playlists"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "playlist_tracks_track_id_fkey"
+            columns: ["track_id"]
+            isOneToOne: false
+            referencedRelation: "tracks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      playlists: {
+        Row: {
+          cover_art: string | null
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cover_art?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cover_art?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          rating: number
+          track_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating: number
+          track_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating?: number
+          track_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_track_id_fkey"
+            columns: ["track_id"]
+            isOneToOne: false
+            referencedRelation: "tracks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tips: {
+        Row: {
+          amount: number
+          created_at: string
+          from_user_id: string
+          id: string
+          status: string
+          to_artist_id: string
+          tx_hash: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          from_user_id: string
+          id?: string
+          status?: string
+          to_artist_id: string
+          tx_hash?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          from_user_id?: string
+          id?: string
+          status?: string
+          to_artist_id?: string
+          tx_hash?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tips_to_artist_id_fkey"
+            columns: ["to_artist_id"]
+            isOneToOne: false
+            referencedRelation: "artists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tracks: {
+        Row: {
+          artist_id: string
+          cover_art: string | null
+          created_at: string
+          duration: number
+          genre: string | null
+          id: string
+          ipfs_hash: string | null
+          play_count: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          artist_id: string
+          cover_art?: string | null
+          created_at?: string
+          duration?: number
+          genre?: string | null
+          id?: string
+          ipfs_hash?: string | null
+          play_count?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          artist_id?: string
+          cover_art?: string | null
+          created_at?: string
+          duration?: number
+          genre?: string | null
+          id?: string
+          ipfs_hash?: string | null
+          play_count?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tracks_artist_id_fkey"
+            columns: ["artist_id"]
+            isOneToOne: false
+            referencedRelation: "artists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
