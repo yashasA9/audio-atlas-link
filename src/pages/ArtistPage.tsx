@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Play, Heart, Users, Coins } from "lucide-react";
+import { Play, Heart, Users, Coins, Wallet } from "lucide-react";
 import { mockArtists, mockTracks } from "@/data/mockData";
 import { usePlayer } from "@/context/PlayerContext";
+import { useWallet } from "@/context/WalletContext";
 import { TipModal } from "@/components/TipModal";
 
 export default function ArtistPage() {
