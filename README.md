@@ -48,13 +48,13 @@ The project combines a React/TypeScript frontend with a Node.js/Express backend 
           Socket.IO          REST API          Gemini API
                 │                 │                 │
                 ▼                 ▼                 │
-       Collaboration        Node.js/Express       │
-          Server                Server             │
+       Collaboration        Node.js/Express         │
+          Server                Server              │
                 │                 │                 │
-       ┌────────┴───────┐    ┌────┴─────────┐      │
-       │                │    │              │      │
-       ▼                ▼    ▼              ▼      ▼
-   Room State         Chat  Code         Terminal  AI
+       ┌────────┴───────┐    ┌────┴─────────┐       │
+       │                │    │              │       │
+       ▼                ▼    ▼              ▼       ▼
+   Room State         Chat  Code         Terminal   AI
    & Editor Events         Execution     Commands  Assistant
                               │
                        ┌──────┴───────┐
@@ -115,21 +115,21 @@ A user enters or creates a collaborative room. The client establishes a Socket.I
 Editor changes, cursor positions, room events, and chat messages are communicated through Socket.IO event handlers.
 
 ```text
-User A
-   │
-   │ Editor change
-   ▼
-Socket.IO Client
-   │
-   ▼
-Collaboration Server
-   │
-   ├── Room State
-   ├── Editor Events
-   └── Participant Events
-   │
-   ▼
-Other Connected Users
+  User A
+     │
+     │ Editor change
+     ▼
+  Socket.IO Client
+     │
+     ▼
+  Collaboration Server
+     │
+     ├── Room State
+     ├── Editor Events
+     └── Participant Events
+     │
+     ▼
+  Other Connected Users
 ```
 
 This allows participants in the same room to see shared workspace activity in real time.
